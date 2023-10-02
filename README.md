@@ -1,6 +1,6 @@
 # Promptify
 
-![Project Image](link-to-image.png)
+![Project Image](bg.png)
 
 > A prompt sharing website.
 
@@ -15,7 +15,7 @@
 
 ## Description
 
-"Promptify" is a web platform designed for sharing prompts. It provides a space for users to post and explore various prompts that can be used for creative writing, brainstorming, or any context that requires a starting point.
+"PromptHub" is a web platform designed for sharing prompts. It provides a space for users to post and explore various prompts that can be used for creative writing, brainstorming, or any context that requires a starting point.
 
 ## Features
 
@@ -34,12 +34,12 @@
 
 ## Deployment
 
-The project is deployed and can be viewed live at [promptify-085.vercel.app](https://promptify-085.vercel.app/).
+The project is deployed and can be viewed live at [prompt-hub-085.vercel.app](https://promptify-085.vercel.app/).
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/promptify.git`
-2. Navigate to the project directory: `cd promptify`
+1. Clone the repository: `git clone https://github.com/your-username/promphub.git`
+2. Navigate to the project directory: `cd propthub`
 3. Install dependencies: `npm install`
 
 ## Usage
