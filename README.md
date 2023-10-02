@@ -34,12 +34,12 @@
 
 ## Deployment
 
-The project is deployed and can be viewed live at [prompt-hub-085.vercel.app](https://promptify-085.vercel.app/).
+The project is deployed and can be viewed live at [prompthub-085.vercel.app](https://prompthub-085.vercel.app).
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/promphub.git`
-2. Navigate to the project directory: `cd propthub`
+1. Clone the repository: `git clone https://github.com/Priyanshu085/prompthub.git`
+2. Navigate to the project directory: `cd prompthub`
 3. Install dependencies: `npm install`
 
 ## Usage
