@@ -1,4 +1,4 @@
-# Promptify
+# PrompyHub
 
 ![Project Image](bg.png)
 
