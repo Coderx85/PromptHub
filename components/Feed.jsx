@@ -6,9 +6,14 @@ import PromptCard from "./PromptCard";
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className='mt-16 prompt_layout'>
-      {data.map((post) => (
+      {data.map((post, index) => (
         <PromptCard
           key={post._id}
+          style={`${index % 2 === 0 
+            ? 'background: black; color: white;'
+            : 'background: white; color: black'
+        }`}
+          className="prompt_card"
           post={post}
           handleTagClick={handleTagClick}
         />

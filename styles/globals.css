@@ -5,7 +5,10 @@ body{
   font-family: 'Josefin Sans', sans-serif;
   font-family: 'Noto Serif TC', serif;
 }
-
+/* *{
+color: white;
+background: black;
+} */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,7 +30,7 @@ body{
   max-width: 640px;
   background-image: radial-gradient(
       at 27% 37%,
-      hsla(215, 98%, 61%, 1) 0px,
+   2   hsla(215, 98%, 61%, 1) 0px,
       transparent 0%
     ),
     radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
@@ -121,7 +124,7 @@ body{
 
 /* Nav Component */
 .logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide;
+  @apply max-sm:hidden font-satoshi font-semibold text-lg tracking-wide bg-gradient-to-r to-red-900 bg-clip-text text-transparent;
 }
 
 .dropdown {
