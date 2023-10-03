@@ -76,7 +76,7 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="search_input peershadow-lg p-6 mb-10 bg-white rounded-md hover:border-none" 
+          className="search_input peershadow-lg p-6 mb-10 bg-white rounded-md" 
           style={{boxShadow: '3px 4px #ff0000b5, -3px -4px #ff0000b5'}}
         />
       </form>
