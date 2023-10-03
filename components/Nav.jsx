@@ -25,8 +25,8 @@ const Nav = () => {
       <Link href="/" className="flex gap-2 flex-center red_gradient">
         <Image 
           src="/assets/images/logo.svg"
-          className="object-contain"
           alt="Brand-Logo"
+          className="object-contain"
           width={30}
           height={30}
           />
@@ -117,7 +117,8 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            {providers && Object.values(providers).map((provider) => (
+            {providers &&
+              Object.values(providers).map((provider) => (
                 <button
                   type='button'
                   key={provider.name}
