@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Profile from "@components/Profile";
+import Loading from "@app/create-prompt/loading";
 
 const MyProfile = () => {
   const router = useRouter();
@@ -47,14 +48,33 @@ const MyProfile = () => {
     }
   };
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setLoading(false); // Set loading to false after 2 seconds
+    }, 1500);
+
+    // Clean up the timeout to avoid memory leaks
+    return () => clearTimeout(delay);
+    }, []);
+
   return (
-    <Profile
-      name='My'
-      desc='Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination'
-      data={myPosts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-    />
+    <>
+      {
+        loading ? (
+          <Loading />
+        ) : (
+          <Profile
+            name='My'
+            desc='Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination'
+            data={myPosts}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+        )
+      }    
+    </>
   );
 };
 
