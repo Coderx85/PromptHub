@@ -26,8 +26,9 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const username = post.creator.username.toUpperCase();
-
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
   return (
     <div className='prompt_card'>
       <div className='flex justify-between items-start gap-5'>
@@ -45,7 +46,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
 
           <div className='flex flex-col'>
             <h3 className='font-semibold text-gray-900'>
-              {username}
+            {capitalizeFirstLetter(post.creator.username)}
             </h3>
             <p className='text-sm text-gray-500'>
               {post.creator.email}
