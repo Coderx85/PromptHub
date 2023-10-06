@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import Router from "next/router";
 
 const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const { data: session } = useSession();
@@ -17,7 +19,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
 
     if (post.creator._id === session?.user.id) return router.push("/profile");
 
-    router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    router.push(`/${post.creator._id}?name=${post.creator.username}`);
   };
 
   const handleCopy = () => {
@@ -25,10 +27,11 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(false), 3000);
   };
-
+  
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
   return (
     <div className='prompt_card'>
       <div className='flex justify-between items-start gap-5'>
@@ -36,22 +39,25 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
           onClick={handleProfileClick}
         >
-          <Image
-            src={post.creator.image}
-            alt='user_image'
-            width={40}
-            height={40}
-            className='rounded-full object-contain'
-          />
+          {/* <Link href={`/users/${user.id}`}> */}
+        
+            <Image
+              src={post.creator.image}
+              alt='user_image'
+              width={40}
+              height={40}
+              className='rounded-full object-contain'
+            />
 
-          <div className='flex flex-col'>
-            <h3 className='font-semibold text-gray-900'>
-            {capitalizeFirstLetter(post.creator.username)}
-            </h3>
-            <p className='text-sm text-gray-500'>
-              {post.creator.email}
-            </p>
-          </div>
+            <div className='flex flex-col'>
+              <h3 className='font-semibold text-gray-900'>
+              {capitalizeFirstLetter(post.creator.username)}
+              </h3>
+              <p className='text-sm text-gray-500'>
+                {post.creator.email}
+              </p>
+            </div>
+          {/* </Link> */}
         </div>
 
         <div className='copy_btn' onClick={handleCopy}>
