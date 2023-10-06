@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
@@ -9,7 +10,6 @@ const PromptCardList = ({ data, handleTagClick }) => {
       {data.map((post) => (
         <PromptCard
           key={post._id}
-          className="prompt_card"
           post={post}
           handleTagClick={handleTagClick}
         />
@@ -19,10 +19,9 @@ const PromptCardList = ({ data, handleTagClick }) => {
 };
 
 const Feed = () => {
+  const [allPosts, setAllPosts] = useState([]);
 
-  const [post, setPosts] = useState([]);
-
-  // // Search states
+  // Search states
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
@@ -31,7 +30,7 @@ const Feed = () => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
 
-    setPosts(data);
+    setAllPosts(data);
   };
 
   useEffect(() => {
@@ -39,8 +38,8 @@ const Feed = () => {
   }, []);
 
   const filterPrompts = (searchtext) => {
-    const regex = new RegExp(searchtext, "i");
-    return post.filter(
+    const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
+    return allPosts.filter(
       (item) =>
         regex.test(item.creator.username) ||
         regex.test(item.tag) ||
@@ -77,8 +76,7 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="search_input peershadow-lg p-6 mb-10 bg-white rounded-md" 
-          style={{boxShadow: '3px 4px #ff0000b5, -3px -4px #ff0000b5'}}
+          className='search_input peer'
         />
       </form>
 
@@ -89,8 +87,8 @@ const Feed = () => {
           handleTagClick={handleTagClick}
         />
       ) : (
-        <PromptCardList data={post} handleTagClick={handleTagClick} />
-      )} 
+        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };

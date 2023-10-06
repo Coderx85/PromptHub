@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Form from "@components/Form";
-import Loading from "@app/create-prompt/loading";
 
 const UpdatePrompt = () => {
   const router = useRouter();
@@ -53,30 +52,14 @@ const UpdatePrompt = () => {
     }
   };
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-      const delay = setTimeout(() => {
-        setLoading(false);
-      }, 1500);
-    }, []);
-
   return (
-    <>
-    {
-      loading ? (
-        <Loading />
-        ) : (
-        <Form
-          type='Edit'
-          post={post}
-          setPost={setPost}
-          submitting={submitting}
-          handleSubmit={updatePrompt}
-        />
-      )
-    }
-    </>
+    <Form
+      type='Edit'
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={updatePrompt}
+    />
   );
 };
 

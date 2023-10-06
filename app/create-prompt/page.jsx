@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loading from "./loading";
 
 import Form from "@components/Form";
-import Loading from "@app/create-prompt/loading";
 
 const CreatePrompt = () => {
   const router = useRouter();
@@ -37,6 +37,7 @@ const CreatePrompt = () => {
       setIsSubmitting(false);
     }
   };
+
 
   const [loading, setLoading] = useState(true);
   
