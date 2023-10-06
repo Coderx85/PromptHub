@@ -38,7 +38,6 @@ const CreatePrompt = () => {
     }
   };
 
-
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
