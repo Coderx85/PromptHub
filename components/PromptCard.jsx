@@ -25,19 +25,18 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(false), 3000);
   };
-
+  
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
   return (
     <div className='prompt_card'>
       <div className='flex justify-between items-start gap-5'>
         <div
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
           onClick={handleProfileClick}
-        >
-          {/* <Link href={`/users/${user.id}`}> */}
-        
+        >        
             <Image
               src={post.creator.image}
               alt='user_image'
@@ -54,7 +53,6 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
                 {post.creator.email}
               </p>
             </div>
-          {/* </Link> */}
         </div>
 
         <div className='copy_btn' onClick={handleCopy}>
