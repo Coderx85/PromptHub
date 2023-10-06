@@ -4,8 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import Router from "next/router";
 
 const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const { data: session } = useSession();
@@ -38,9 +36,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         <div
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
           onClick={handleProfileClick}
-        >
-          {/* <Link href={`/users/${user.id}`}> */}
-        
+        >        
             <Image
               src={post.creator.image}
               alt='user_image'
@@ -57,7 +53,6 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
                 {post.creator.email}
               </p>
             </div>
-          {/* </Link> */}
         </div>
 
         <div className='copy_btn' onClick={handleCopy}>
