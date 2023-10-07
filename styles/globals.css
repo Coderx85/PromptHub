@@ -124,7 +124,7 @@ background: black;
 
 /* Nav Component */
 .logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg tracking-wide bg-gradient-to-r to-red-900 bg-clip-text text-transparent;
+  @apply max-sm:hidden font-satoshi font-semibold text-lg tracking-wide bg-gradient-to-r to-red-900 bg-clip-text ;
 }
 
 .dropdown {
