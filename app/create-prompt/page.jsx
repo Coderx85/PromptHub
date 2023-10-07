@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Loading from "./loading";
 
 import Form from "@components/Form";
 
@@ -38,33 +37,14 @@ const CreatePrompt = () => {
     }
   };
 
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    // Simulate a 2-second delay
-    const delay = setTimeout(() => {
-      setLoading(false); // Set loading to false after 2 seconds
-    }, 1500);
-  
-    // Clean up the timeout to avoid memory leaks
-    return () => clearTimeout(delay);
-  }, []); // Empty dependency array ensures this effect runs only once
-  
-
   return (
-    <>
-      {loading ? (
-        <Loading />  
-        ) : (
-        <Form
-          type='Create'
-          post={post}
-          setPost={setPost}
-          submitting={submitting}
-          handleSubmit={createPrompt}
-        />
-      )}
-    </>
+    <Form
+      type='Create'
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={createPrompt}
+    />
   );
 };
 

@@ -3,10 +3,11 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "@app/create-prompt/loading";
 
 import Profile from "@components/Profile";
 
-const MyProfile = () => {
+export default function MyProfile () {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -47,15 +48,33 @@ const MyProfile = () => {
     }
   };
 
-  return (
-    <Profile
-      name='My'
-      desc='Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination'
-      data={myPosts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-    />
-  );
-};
+{
+  // await new Promise((resolve) => (resolve, 2000));
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Simulate a 2-second delay
+    const delay = setTimeout(() => {
+      setLoading(false); // Set loading to false after 2 seconds
+    }, 1000);
+  
+    // Clean up the timeout to avoid memory leaks
+    return () => clearTimeout(delay);
+  }, []); // Empty dependency array ensures this effect runs only once
 
-export default MyProfile;
+  return (
+    <>
+      {loading ? (
+        <Loading/>
+      ) : (
+        <Profile
+          name='My'
+          desc='Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination'
+          data={myPosts}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      )}
+    </>
+  );
+}}

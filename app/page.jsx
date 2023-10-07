@@ -1,6 +1,6 @@
 "use client"
-import Feed from "@components/Feed";
 
+import Feed from "@components/Feed";
 import { useState, useEffect } from 'react';
 import Loading from "./loading";
 
@@ -34,10 +34,9 @@ export default function Home() {
             PromptHub is a platform that enables users to seamlessly share and explore prompts for writing and ideation. 
             With a clean, intuitive interface, it offers an enriching experience in a streamlined, user-friendly environment
           </p>
-
           <Feed />
         </section>
-    )}
-  </>
-);
-}
+      )}
+    </>
+  )
+};

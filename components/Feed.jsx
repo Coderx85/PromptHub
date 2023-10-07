@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
@@ -19,9 +18,10 @@ const PromptCardList = ({ data, handleTagClick }) => {
 };
 
 const Feed = () => {
-  const [allPosts, setAllPosts] = useState([]);
 
-  // Search states
+  const [post, setPosts] = useState([]);
+
+  // // Search states
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
@@ -30,7 +30,7 @@ const Feed = () => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
 
-    setAllPosts(data);
+    setPosts(data);
   };
 
   useEffect(() => {
@@ -38,8 +38,8 @@ const Feed = () => {
   }, []);
 
   const filterPrompts = (searchtext) => {
-    const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
-    return allPosts.filter(
+    const regex = new RegExp(searchtext, "i");
+    return post.filter(
       (item) =>
         regex.test(item.creator.username) ||
         regex.test(item.tag) ||
@@ -76,7 +76,8 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className='search_input peer'
+          className="search_input peershadow-lg p-6 mb-10 bg-white rounded-md hover:border-none" 
+          style={{boxShadow: '3px 4px #ff0000b5, -3px -4px #ff0000b5'}}
         />
       </form>
 
@@ -87,8 +88,8 @@ const Feed = () => {
           handleTagClick={handleTagClick}
         />
       ) : (
-        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
-      )}
+        <PromptCardList data={post} handleTagClick={handleTagClick} />
+      )} 
     </section>
   );
 };

@@ -1,82 +1,47 @@
-"use client";
-
+import PromptCard from "./PromptCard";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-import Profile from "@components/Profile";
-import Loading from "@app/create-prompt/loading";
-
-const MyProfile = () => {
-  const router = useRouter();
-  const { data: session } = useSession();
-
-  const [myPosts, setMyPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${session?.user.id}/posts`);
-      const data = await response.json();
-
-      setMyPosts(data);
-    };
-
-    if (session?.user.id) fetchPosts();
-  }, [session?.user.id]);
-
-  const handleEdit = (post) => {
-    router.push(`/update-prompt?id=${post._id}`);
-  };
-
-  const handleDelete = async (post) => {
-    const hasConfirmed = confirm(
-      "Are you sure you want to delete this prompt?"
-    );
-
-    if (hasConfirmed) {
-      try {
-        await fetch(`/api/prompt/${post._id.toString()}`, {
-          method: "DELETE",
-        });
-
-        const filteredPosts = myPosts.filter((item) => item._id !== post._id);
-
-        setMyPosts(filteredPosts);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate a 2-second delay
-    const delay = setTimeout(() => {
-      setLoading(false); // Set loading to false after 2 seconds
-    }, 1500);
-  
-    // Clean up the timeout to avoid memory leaks
-    return () => clearTimeout(delay);
-  }, []); // Empty dependency array ensures this effect runs only once
-  
+const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
+  const {data: session} = useSession();
   return (
-    <>
-      {
-        loading ? (
-          <Loading />
-        ) : (
-          <Profile
-            name='My'
-            desc='Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination'
-            data={myPosts}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
+    <section className='w-full'>
+      <div className="flex items-center gap-x-40 border-red-500 ">
+        
+        {session && session.user && (
+          <div className="flex gap-3 flex-col">
+            <Image 
+              src={session.user.image}
+              alt="Profile"
+              width={150}
+              height={150} 
+              className="rounded-full object-cover" 
+            />
+            <span className="font-semibold">{session.user.name}</span>
+            <span className="font-inter text-sm text-gray-900">{session.user.email}</span>
+          </div>
+        )}
+        <div>
+          <h1 className='head_text text-left flex-row'>
+            <span className='red_gradient'>{name} Profile</span>
+          </h1>
+          <p className='desc text-left'>{desc}</p>
+
+        </div>
+      </div>
+
+      <div className='mt-10 prompt_layout'>
+        {data.map((post) => (
+          <PromptCard
+            key={post._id}
+            post={post}
+            handleEdit={() => handleEdit && handleEdit(post)}
+            handleDelete={() => handleDelete && handleDelete(post)}
           />
-        )
-      }    
-    </>
+        ))}
+      </div>
+    </section>
   );
 };
 
-export default MyProfile;
+export default Profile;
