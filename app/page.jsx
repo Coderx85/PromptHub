@@ -13,7 +13,7 @@ export default function Home() {
     // Simulate a 2-second delay
     const delay = setTimeout(() => {
       setLoading(false); // Set loading to false after 2 seconds
-    }, 1000);
+  }, 1000);
   
     // Clean up the timeout to avoid memory leaks
     return () => clearTimeout(delay);
