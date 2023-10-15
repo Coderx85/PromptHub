@@ -12,7 +12,7 @@
 - [Deployment](#deployment)
 - [Installation](#installation)
 - [Usage](#usage)
-- [MIT Liencse](#mit-license)
+- [MIT Liencse](#license)
 
 ## Description
 
