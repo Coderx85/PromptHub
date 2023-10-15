@@ -12,6 +12,7 @@
 - [Deployment](#deployment)
 - [Installation](#installation)
 - [Usage](#usage)
+- [MIT Liencse](#mit-license)
 
 ## Description
 
@@ -48,4 +49,4 @@ The project is deployed and can be viewed live at [prompthub-085.vercel.app](htt
 2. Open your browser and go to `http://localhost:3000`
 
 ## Licenses
-[MIT LICENSE](LICENSE)
+[MIT License](LICENSE)
