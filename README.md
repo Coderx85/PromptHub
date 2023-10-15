@@ -46,3 +46,6 @@ The project is deployed and can be viewed live at [prompthub-085.vercel.app](htt
 
 1. Start the development server: `npm run dev`
 2. Open your browser and go to `http://localhost:3000`
+
+## Licenses
+[MIT LICENSE](LICENSE)
