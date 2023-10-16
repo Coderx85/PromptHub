@@ -41,7 +41,7 @@ The project is deployed and can be viewed live at [prompthub-085.vercel.app](htt
 
 1. Clone the repository: `git clone https://github.com/Priyanshu085/prompthub.git`
 2. Navigate to the project directory: `cd prompthub`
-3. Install dependencies: `npm install`
+3. Install dependencies: `npm install next-auth mongoose mongodb`
 
 ## Usage
 
