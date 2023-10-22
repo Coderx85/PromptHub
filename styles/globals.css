@@ -61,7 +61,7 @@ background: black;
 }
 
 .black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border dark:bg-gray-700 border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
 .outline_btn {
@@ -69,7 +69,7 @@ background: black;
 }
 
 .head_text {
-  @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
+  @apply mt-5 text-5xl font-extrabold leading-[1.15] dark:text-slate-300 text-black sm:text-6xl;
 }
 
 .red_gradient {
@@ -137,7 +137,7 @@ background: black;
 
 /* PromptCard Component */
 .prompt_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 shadow-sm bg-white dark:bg-red-950 shadow-white bg-clip-padding p-6 pb-4 backdrop-blur-xl backdrop-filter md:w-[360px] w-full h-fit;
 }
 
 .flex-center {

@@ -17,8 +17,8 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
               height={150} 
               className="rounded-full object-cover" 
             />
-            <span className="font-semibold">{session.user.name}</span>
-            <span className="font-inter text-sm text-gray-900">{session.user.email}</span>
+            <span className="font-semibold dark:text-white">{name}</span>
+            <span className="font-inter dark:text-gray-500 text-sm text-gray-900">{session.user.email}</span>
           </div>
         )}
         <div>

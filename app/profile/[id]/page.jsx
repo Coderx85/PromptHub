@@ -1,4 +1,4 @@
-"use client";
+  "use client";
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -22,10 +22,14 @@ const UserProfile = ({ params }) => {
     if (params?.id) fetchPosts();
   }, [params.id]);
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <Profile
-      name={userName}
-      desc={`Welcome to ${userName}'s personalized profile page. Explore ${userName}'s exceptional prompts and be inspired by the power of their imagination`}
+      name={capitalizeFirstLetter(userName)}
+      desc={`Welcome to ${capitalizeFirstLetter(userName)}'s personalized profile page. Explore ${capitalizeFirstLetter(userName)}'s exceptional prompts and be inspired by the power of their imagination`}
       data={userPosts}
       // handleDelete={false}
       // handleEdit={false}

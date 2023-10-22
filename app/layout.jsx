@@ -9,13 +9,12 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }) => (
-  <html lang='en'>
+  <html lang='en' data-theme='black'>
     <body>
       <Provider>
         <div className='main'>
           <div className='gradient' />
         </div>
-
         <main className='app'>
           <Nav />
           {children}
