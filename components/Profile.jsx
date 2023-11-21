@@ -8,7 +8,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
     <section className='w-full'>
       <div className="flex items-center gap-x-40 border-red-500 ">
         
-        {session && session.user && (
+        {/* {session && session.user && (
           <div className="flex gap-3 flex-col">
             <Image 
               src={session.user.image}
@@ -20,7 +20,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
             <span className="font-semibold dark:text-white">{name}</span>
             <span className="font-inter dark:text-gray-500 text-sm text-gray-900">{session.user.email}</span>
           </div>
-        )}
+        )} */}
         <div>
           <h1 className='head_text text-left flex-row'>
             <span className='red_gradient'>{name} Profile</span>
