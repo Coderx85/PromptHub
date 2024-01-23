@@ -37,7 +37,7 @@ const Nav = () => {
 
       <div className="sm:flex hidden">
       {session?.user ? (
-          <div className='flex gap-3 md:gap-5'>
+        <div className='flex gap-3 md:gap-5'>
           <Link href="/create-prompt" className="black_btn">
             Create Post
           </Link>
@@ -75,50 +75,55 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className='sm:hidden flex relative'>
-        {session?.user ? (
-          <div className='flex'>
-            <Image
-              src={session.user.image}
-              width={37}
-              height={37}
-              className='rounded-full'
-              alt='profile'
-              onClick={() => setToggleDropdown(!toggleDropdown)}
-            />
+        {
+          session?.user ? (
+            <div className="flex">
+              <input type="checkbox" id="active"/>
+              <label for="active" class="menu-btn"><span></span></label>
+              <label for="active" class="close"></label>
+              <div class="wrapper">
+                <ul>
 
-            {toggleDropdown && (
-              <div className='dropdown'>
-                <Link
-                  href='/profile'
-                  className='dropdown_link'
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  My Profile
-                </Link>
-                <Link
-                  href='/create-prompt'
-                  className='dropdown_link'
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Create Prompt
-                </Link>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setToggleDropdown(false);
-                    signOut();
-                  }}
-                  className='mt-5 w-full'
-                >
-                  Sign Out
-                </button>
+                  <li>
+                    <Link
+                        id="active"
+                        href='/profile'
+                        className='dropdown_link'
+                        onClick={() => setToggleDropdown(false)}
+                      >
+                        My Profile
+                      </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      href='/create-prompt'
+                      className='dropdown_link'
+                      onClick={() => setToggleDropdown(false)}>
+                      Create Prompt
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button
+                      type='button'
+                      onClick={() => {
+                        setToggleDropdown(false);
+                        signOut();
+                      }}
+                      className='w-full'
+                    >
+                      Sign Out
+                    </button>
+                  </li>
+                  
+                </ul>
               </div>
-            )}
-          </div>
-        ) : (
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => (
+            </div>
+
+          ) : (
+
+            providers && Object.values(providers).map((provider) => (
                 <button
                   type='button'
                   key={provider.name}
@@ -129,11 +134,11 @@ const Nav = () => {
                 >
                   Sign in
                 </button>
-              ))}
-          </>
-        )}
-      </div>
+            ))
 
+          )
+        }
+      </div>
     </nav>
   );
 };
