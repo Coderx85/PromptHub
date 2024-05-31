@@ -30,8 +30,28 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  const [likes, setLikes] = useState(post.likes);
+  const [liked, setLiked] = useState(false);
+
+  const handleLike = async () => {
+    try {
+      const response = await fetch(`/api/prompt/${post._id}/like`, {
+        method: 'PATCH',
+      });
+
+      if (response.ok) {
+        setLikes(likes + 1);
+        setLiked(true);
+      } else {
+        console.error('Failed to like the prompt');
+      }
+    } catch (error) {
+      console.error('Failed to like the prompt:', error);
+    }
+  };
+
   return (
-  <div className='prompt_card'>
+  <div className='prompt_card hover:bg-slate-800'>
       <div className='flex justify-between items-start gap-5'>
         <div
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
@@ -54,7 +74,6 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
             </p> */}
           </div>
         </div>
-
         <div className='copy_btn' onClick={handleCopy}>
           <Image
             src={
@@ -93,6 +112,17 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </p>
         </div>
       )}
+      <hr className=" my-3"/>
+      <div className='flex gap-3 items-center'>
+        <button
+          className={`like_btn ${liked ? 'liked' : ''}`}
+          onClick={handleLike}
+          disabled={liked}
+        >
+          Like
+        </button>
+        <span>{likes}</span>
+      </div>
     </div>
   );
 };
