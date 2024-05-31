@@ -1,30 +1,28 @@
-// app/api/users/[id]/likes/route.js
-import User from '@models/user';
+// pages/api/users/[id]/likes.js
+
 import { connectToDB } from '@utils/database';
-import { getSession } from 'next-auth/react';
+import User from '@models/user';
 
-export const GET = async (request, { params }) => {
-  const session = await getSession({ req: request });
+export default async function handler(req, res) {
+  const { method } = req;
+  const { id } = req.query;
 
-  if (!session) {
-    return new Response('Unauthorized', { status: 401 });
+  await connectToDB();
+
+  switch (method) {
+    case 'GET':
+      try {
+        const user = await User.findById(id).populate('likes');
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        res.status(200).json(user.likes);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+      break;
+
+    default:
+      res.setHeader('Allow', ['GET']);
+      res.status(405).end(`Method ${method} Not Allowed`);
   }
-
-  try {
-    await connectToDB();
-
-    const user = await User.findById(params.id).populate('likedPrompts');
-
-    if (!user) {
-      return new Response('User not found', { status: 404 });
-    }
-
-    const likedPromptIds = user.likedPrompts.map((prompt) => prompt._id.toString());
-
-    return new Response(JSON.stringify(likedPromptIds), { status: 200 });
-  } catch (error) {
-    return new Response('Failed to fetch liked prompts', { status: 500 });
-  } finally {
-    mongoose.connection.close();
-  }
-};
+}

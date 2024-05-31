@@ -33,21 +33,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const [likes, setLikes] = useState(post.likes);
   const [liked, setLiked] = useState(false);
 
-   const handleLike = async () => {
-    try {
-      const response = await fetch(`/api/prompt/${post._id}/like`, {
-        method: 'PATCH',
-      });
-
-      if (response.ok) {
-        const updatedPost = await response.json();
-        setLikes(updatedPost.likes);
-      }
-    } catch (error) {
-      console.error('Failed to like the prompt', error);
-    }
-  };
-
+  
   useEffect(() => {
     if (session?.user) {
       checkIfLiked();
@@ -61,6 +47,21 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
       setLiked(data.includes(post._id));
     } catch (error) {
       console.error('Failed to check if liked', error);
+    }
+  };
+  
+  const handleLike = async () => {
+    try {
+      const response = await fetch(`/api/prompt/${post._id}/like`, {
+        method: 'PATCH',
+      });
+
+      if (response.ok) {
+        const updatedPost = await response.json();
+        setLikes(updatedPost.likes);
+      }
+    } catch (error) {
+      console.error('Failed to like the prompt', error);
     }
   };
 
