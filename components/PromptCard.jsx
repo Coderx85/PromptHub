@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -48,8 +48,24 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     }
   };
 
+  useEffect(() => {
+    if (session?.user) {
+      checkIfLiked();
+    }
+  }, [session]);
+
+  const checkIfLiked = async () => {
+    try {
+      const response = await fetch(`/api/users/${session.user.id}/likes`);
+      const data = await response.json();
+      setLiked(data.includes(post._id));
+    } catch (error) {
+      console.error('Failed to check if liked', error);
+    }
+  };
+
   return (
-  <div className='prompt_card hover:bg-transparent'>
+  <div className='prompt_card hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 p-4 rounded-lg shadow-md'>
       <div className='flex justify-between items-start gap-5'>
         <div
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
@@ -110,7 +126,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </p>
         </div>
       )}
-      {session?.user ? (
+      {/* {session?.user ? (
         <>
         <hr className=" my-3"/>
         <div className='flex items-center gap-2'>
@@ -126,15 +142,19 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         </>
       ):(
         <div></div>
-        // <div className="mt-5 flex items-center gap-2">
-        //   <button onClick={handleLike} className="text-sm bg-blue-500 text-white py-1 px-2 rounded">
-        //     Like
-        //   </button>
-        //     <span>{likes} likes</span>
-        //   </div>
-        // </div>
-      )}
-    </div>
+      )} */}
+      <hr className=" my-3"/>
+        <div className='flex items-center gap-2'>
+          <button
+            className={`like_btn ${liked ? 'liked' : ''} bg-blue-500 text-white py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-300`}
+            onClick={handleLike}
+            disabled={liked}
+          >
+            {/* Like */}
+          <span className="text-gray-700 dark:text-slate-300">{likes} Likes</span>
+          </button>
+        </div>
+    </div>  
   );
 };
 

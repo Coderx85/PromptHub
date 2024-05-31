@@ -183,8 +183,8 @@ background: black;
   display: inline-block;
   padding: 5px 0;
   position: relative;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  --webkit-background-clip: text;
+  --webkit-text-fill-color: transparent;
   transition: all 0.3s ease-in-out;
 }
 
@@ -211,7 +211,7 @@ background: black;
 
 /* PromptCard Component */
 .prompt_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 shadow-sm bg-white dark:bg-red-950 shadow-white bg-clip-padding p-6 pb-4 backdrop-blur-xl backdrop-filter md:w-[360px] w-full h-fit;
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 shadow-sm bg-white dark:bg-slate-900 shadow-white bg-clip-padding p-6 pb-4 backdrop-blur-xl backdrop-filter md:w-[360px] w-full h-fit;
 }
 
 .flex-center {

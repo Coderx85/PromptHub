@@ -17,5 +17,7 @@ export const PATCH = async (request, { params }) => {
     return new Response(JSON.stringify(prompt), { status: 200 });
   } catch (error) {
     return new Response('Failed to update likes', { status: 500 });
+  } finally {
+    mongoose.connection.close();
   }
 };

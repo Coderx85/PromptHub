@@ -13,7 +13,11 @@ const UserSchema = new Schema({
   },
   image: {
     type: String,
-  }
+  },
+  likedposts: [{ 
+    type: Schema.Types.ObjectId, 
+    ref: 'Post' 
+  }]
 });
 
 const User = models.User || model("User", UserSchema);
