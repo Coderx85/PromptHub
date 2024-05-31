@@ -126,7 +126,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </p>
         </div>
       )}
-      {/* {session?.user ? (
+      {session?.user ? (
         <>
         <hr className=" my-3"/>
         <div className='flex items-center gap-2'>
@@ -142,19 +142,8 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         </>
       ):(
         <div></div>
-      )} */}
-      <hr className=" my-3"/>
-        <div className='flex items-center gap-2'>
-          <button
-            className={`like_btn ${liked ? 'liked' : ''} bg-blue-500 text-white py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-300`}
-            onClick={handleLike}
-            disabled={liked}
-          >
-            {/* Like */}
-          <span className="text-gray-700 dark:text-slate-300">{likes} Likes</span>
-          </button>
-        </div>
-    </div>  
+      )}
+      </div>
   );
 };
 
