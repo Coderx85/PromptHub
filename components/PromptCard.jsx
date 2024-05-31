@@ -33,25 +33,23 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const [likes, setLikes] = useState(post.likes);
   const [liked, setLiked] = useState(false);
 
-  const handleLike = async () => {
+   const handleLike = async () => {
     try {
       const response = await fetch(`/api/prompt/${post._id}/like`, {
         method: 'PATCH',
       });
 
       if (response.ok) {
-        setLikes(likes + 1);
-        setLiked(true);
-      } else {
-        console.error('Failed to like the prompt');
+        const updatedPost = await response.json();
+        setLikes(updatedPost.likes);
       }
     } catch (error) {
-      console.error('Failed to like the prompt:', error);
+      console.error('Failed to like the prompt', error);
     }
   };
 
   return (
-  <div className='prompt_card hover:bg-slate-800'>
+  <div className='prompt_card hover:bg-transparent'>
       <div className='flex justify-between items-start gap-5'>
         <div
           className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
@@ -112,17 +110,30 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </p>
         </div>
       )}
-      <hr className=" my-3"/>
-      <div className='flex gap-3 items-center'>
-        <button
-          className={`like_btn ${liked ? 'liked' : ''}`}
-          onClick={handleLike}
-          disabled={liked}
-        >
-          Like
-        </button>
-        <span>{likes}</span>
-      </div>
+      {session?.user ? (
+        <>
+        <hr className=" my-3"/>
+        <div className='flex items-center gap-2'>
+          <button
+            className={`like_btn ${liked ? 'liked' : ''}`}
+            onClick={handleLike}
+            disabled={liked}
+          >
+            Like
+          </button>
+          <span>{likes} Likes</span>
+        </div>
+        </>
+      ):(
+        <div></div>
+        // <div className="mt-5 flex items-center gap-2">
+        //   <button onClick={handleLike} className="text-sm bg-blue-500 text-white py-1 px-2 rounded">
+        //     Like
+        //   </button>
+        //     <span>{likes} likes</span>
+        //   </div>
+        // </div>
+      )}
     </div>
   );
 };
