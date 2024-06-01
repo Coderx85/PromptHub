@@ -30,40 +30,40 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  const [likes, setLikes] = useState(post.likes);
-  const [liked, setLiked] = useState(false);
+  // const [likes, setLikes] = useState(post.likes);
+  // const [liked, setLiked] = useState(false);
 
   
-  useEffect(() => {
-    if (session?.user) {
-      checkIfLiked();
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     checkIfLiked();
+  //   }
+  // }, [session]);
 
-  const checkIfLiked = async () => {
-    try {
-      const response = await fetch(`/api/users/${session.user.id}/likes`);
-      const data = await response.json();
-      setLiked(data.includes(post._id));
-    } catch (error) {
-      console.error('Failed to check if liked', error);
-    }
-  };
+  // const checkIfLiked = async () => {
+  //   try {
+  //     const response = await fetch(`/api/users/${session.user.id}/likes`);
+  //     const data = await response.json();
+  //     setLiked(data.includes(post._id));
+  //   } catch (error) {
+  //     console.error('Failed to check if liked', error);
+  //   }
+  // };
   
-  const handleLike = async () => {
-    try {
-      const response = await fetch(`/api/prompt/${post._id}/like`, {
-        method: 'PATCH',
-      });
+  // const handleLike = async () => {
+  //   try {
+  //     const response = await fetch(`/api/prompt/${post._id}/like`, {
+  //       method: 'PATCH',
+  //     });
 
-      if (response.ok) {
-        const updatedPost = await response.json();
-        setLikes(updatedPost.likes);
-      }
-    } catch (error) {
-      console.error('Failed to like the prompt', error);
-    }
-  };
+  //     if (response.ok) {
+  //       const updatedPost = await response.json();
+  //       setLikes(updatedPost.likes);
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to like the prompt', error);
+  //   }
+  // };
 
   return (
   <div className='prompt_card hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 p-4 rounded-lg shadow-md'>
@@ -127,7 +127,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </p>
         </div>
       )}
-      {session?.user ? (
+      {/* {session?.user ? (
         <>
         <hr className=" my-3"/>
         <div className='flex items-center gap-2'>
@@ -143,7 +143,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         </>
       ):(
         <div></div>
-      )}
+      )} */}
       </div>
   );
 };
