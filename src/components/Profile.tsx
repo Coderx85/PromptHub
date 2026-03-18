@@ -1,9 +1,16 @@
 import PromptCard from "./PromptCard";
 import { authClient } from "@auth/auth-client";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 
-const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
+type ProfileProps = {
+  name: string;
+  desc: string;
+  data: any[];
+  handleEdit?: (post: any) => void;
+  handleDelete?: (post: any) => void;
+};
+
+const Profile = ({ name, desc, data, handleEdit, handleDelete }: ProfileProps) => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {

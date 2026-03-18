@@ -1,8 +1,6 @@
 import "@styles/globals.css";
 
 import Nav from "@components/Nav";
-import Provider from "@components/Provider";
-import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "PromptHub",
@@ -12,16 +10,13 @@ export const metadata = {
 const RootLayout = ({ children }) => (
   <html lang='en' data-theme='black'>
     <body>
-      <Provider>
         <div className='main'>
           <div className='gradient' />
         </div>
         <main className='app'>
           <Nav />
           {children}
-          <Analytics />
         </main>
-      </Provider>
     </body>
   </html>
 );

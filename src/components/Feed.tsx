@@ -3,7 +3,19 @@
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 
-const PromptCardList = ({ data, handleTagClick }) => {
+type PromptCardListProps = {
+  data: Array<{
+    _id: string;
+    creator: {
+      username: string;
+    };
+    prompt: string;
+    tag: string;
+  }>;
+  handleTagClick: (tagName: string) => void;
+};
+
+const PromptCardList = ({ data, handleTagClick }: PromptCardListProps) => {
   return (
     <div className='mt-16 prompt_layout'>
       {data.map((post) => (
