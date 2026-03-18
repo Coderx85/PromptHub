@@ -10,7 +10,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest run --watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "pnpm test"
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.5.5",
@@ -19,6 +23,7 @@
     "bcrypt": "^6.0.0",
     "better-auth": "^1.5.5",
     "daisyui": "^5.5.19",
+    "husky": "^9.1.7",
     "mongodb": "^7.1.0",
     "mongoose": "^9.3.1",
     "next": "16.1.7",
@@ -35,6 +40,7 @@
     "@types/react": "19.2.14",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.1.7",
+    "lint-staged": "^16.4.0",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
   }
