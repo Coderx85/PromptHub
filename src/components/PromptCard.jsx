@@ -2,20 +2,32 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { authClient } from "@auth/auth-client";
 import { usePathname, useRouter } from "next/navigation";
 
 const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
-  const { data: session } = useSession();
+  const [session, setSession] = useState(null);
   const pathName = usePathname();
   const router = useRouter();
 
   const [copied, setCopied] = useState("");
 
+  useEffect(() => {
+    const getSession = async () => {
+      try {
+        const { data } = await authClient.getSession();
+        setSession(data);
+      } catch (error) {
+        console.error("Failed to get session:", error);
+      }
+    };
+    getSession();
+  }, []);
+
   const handleProfileClick = () => {
     console.log(post);
 
-    if (post.creator._id === session?.user.id) return router.push("/profile");
+    if (post.creator._id === session?.user._id) return router.push("/profile");
 
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
@@ -23,7 +35,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
-    setTimeout(() => setCopied(false), 3000);
+    setTimeout(() => setCopied(""), 3000);
   };
 
   const capitalizeFirstLetter = (string) => {
@@ -111,7 +123,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         #{post.tag}
       </p>
 
-      {session?.user.id === post.creator._id && pathName === "/profile" && (
+      {session?.user._id === post.creator._id && pathName === "/profile" && (
         <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
           <p
             className='font-inter text-sm green_gradient cursor-pointer'

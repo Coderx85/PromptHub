@@ -2,23 +2,41 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { authClient } from "@auth/auth-client";
 
 const Nav = () => {
-  const { data: session } = useSession();
-
-  // const isLoggedIn = true;
-
-  const [providers, setProviders] = useState(null);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [session, setSession] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      const response = await getProviders();
-      setProviders(response)
-    })();
+    const getSession = async () => {
+      try {
+        const { data } = await authClient.getSession();
+        setSession(data);
+      } catch (error) {
+        console.error("Failed to get session:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getSession();
   }, []);
+
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+
+  // removed: next-auth getProviders() - better-auth handles this automatically
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
+
+  const handleSignIn = async (provider) => {
+    await authClient.signIn.social({
+      provider: provider,
+      callbackURL: "/",
+    });
+  };
 
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
@@ -42,7 +60,7 @@ const Nav = () => {
             Create Post
           </Link>
 
-          <button className="outline_btn" type="button" onClick={signOut}>
+          <button className="outline_btn" type="button" onClick={handleSignOut}>
             Sign Out
           </button>
 
@@ -59,16 +77,13 @@ const Nav = () => {
         </div>
       ):(
         <>
-          {providers && Object.values(providers).map((providers) => (
-            <button
-              type="button"
-              key={providers.name}
-              onClick={() => signIn(providers.id)}
-              className="black_btn"
-            >
-              Sign In
-            </button>
-          ))}
+          <button
+            type="button"
+            onClick={() => handleSignIn('github')}
+            className="black_btn"
+          >
+            Sign In with GitHub
+          </button>
         </>
       )}
     </div>
@@ -79,9 +94,9 @@ const Nav = () => {
           session?.user ? (
             <div className="flex">
               <input type="checkbox" id="active"/>
-              <label for="active" class="menu-btn"><span></span></label>
-              <label for="active" class="close"></label>
-              <div class="wrapper">
+              <label htmlFor="active" className="menu-btn"><span></span></label>
+              <label htmlFor="active" className="close"></label>
+              <div className="wrapper">
                 <ul>
 
                   <li>
@@ -109,7 +124,7 @@ const Nav = () => {
                       type='button'
                       onClick={() => {
                         setToggleDropdown(false);
-                        signOut();
+                        handleSignOut();
                       }}
                       className='w-full'
                     >
@@ -123,18 +138,13 @@ const Nav = () => {
 
           ) : (
 
-            providers && Object.values(providers).map((provider) => (
-                <button
-                  type='button'
-                  key={provider.name}
-                  onClick={() => {
-                    signIn(provider.id);
-                  }}
-                  className='black_btn'
-                >
-                  Sign in
-                </button>
-            ))
+            <button
+              type='button'
+              onClick={() => handleSignIn('github')}
+              className='black_btn'
+            >
+              Sign In with GitHub
+            </button>
 
           )
         }

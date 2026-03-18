@@ -1,9 +1,22 @@
 import PromptCard from "./PromptCard";
-import { useSession } from "next-auth/react";
+import { authClient } from "@auth/auth-client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
-  const {data: session} = useSession();
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    const getSession = async () => {
+      try {
+        const { data: sessData } = await authClient.getSession();
+        setSession(sessData);
+      } catch (error) {
+        console.error("Failed to get session:", error);
+      }
+    };
+    getSession();
+  }, []);
   return (
     <section className='w-full'>
       <div className="flex items-center gap-x-40 border-red-500 ">
@@ -33,6 +46,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
       <div className='mt-10 prompt_layout'>
         {data.map((post) => (
           <PromptCard
+            handleTagClick={() => {}}
             key={post._id}
             post={post}
             handleEdit={() => handleEdit && handleEdit(post)}

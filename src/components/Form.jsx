@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
+const Form = ({ type, post, setPost, submitting, handleSubmit, error }) => {
   return (
     <section className='w-full max-w-full flex-start flex-col'>
       <h1 className='head_text text-left'>
@@ -10,6 +10,12 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         {type} and share amazing prompts with the world, and let your
         imagination run wild with any AI-powered platform
       </p>
+
+      {error && (
+        <div className='mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md max-w-2xl'>
+          <p className='text-sm font-medium'>{error}</p>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit}
