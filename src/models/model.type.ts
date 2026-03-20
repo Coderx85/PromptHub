@@ -1,7 +1,19 @@
-import { PromptSchema } from "./prompt.modal"
-import { InferSchemaType } from "mongoose"
-import { UserSchema } from "./user.modal"
+import { Types } from "mongoose";
+import * as Id from "@/utils/brand";
 
-export type TPrompt = InferSchemaType<typeof PromptSchema>
+export interface IUser {
+  _id: Id.TUserId;
+  email: string;
+  username: string;
+  image?: string;
+  likedposts: Array<Types.ObjectId>;
+}
 
-export type TUser = InferSchemaType<typeof UserSchema>
+export interface IPrompt {
+  _id: Id.TPromptId;
+  creator: {
+    username: string;
+  };
+  prompt: string;
+  tag: string;
+}
