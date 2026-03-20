@@ -1,0 +1,19 @@
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    hostname: mongodb
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=user
+      - MONGODB_INITDB_ROOT_PASSWORD=pass
+    ports:
+      - 27017:27017
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - db:/data/db
+      - configdb:/data/configdb
+      - mongot:/data/mongot
+volumes:
+  db:
+  configdb:
+  mongot:

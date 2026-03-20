@@ -11,13 +11,18 @@
     "test": "vitest run",
     "test:watch": "vitest run --watch",
     "test:coverage": "vitest run --coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docker:dev": "docker compose -f docker-compose.dev.yaml up --build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "pnpm test"
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.5.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.9",
+    "@mui/material": "^7.3.9",
     "@vercel/analytics": "^2.0.1",
     "autoprefixer": "10.4.27",
     "bcrypt": "^6.0.0",
