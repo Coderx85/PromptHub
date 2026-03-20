@@ -17,7 +17,7 @@ type PromptCardListProps = {
 
 const PromptCardList = ({ data, handleTagClick }: PromptCardListProps) => {
   return (
-    <div className='mt-16 prompt_layout'>
+    <div className="mt-16 space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3">
       {data.map((post) => (
         <PromptCard
           key={post._id}
@@ -42,6 +42,10 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     const response = await fetch("/api/prompt");
+    if (!response.ok) {
+      throw new Error(`Failed to fetch prompts: ${response.status}`);
+    }
+
     const data = await response.json();
 
     setPosts(data);
@@ -82,30 +86,33 @@ const Feed = () => {
   };
 
     return (
-    <section className='feed'>
-      <form className='relative w-full flex-center'>
-        <input
-          type='text'
-          placeholder='Search for a tag or a username'
-          value={searchText}
-          onChange={handleSearchChange}
-          required
-          className="search_input peershadow-lg p-6 mb-10 bg-slate-700 rounded-md hover:border-none" 
-          style={{boxShadow: '3px 4px #ff0000b5, -3px -4px #ff0000b5', color:"black"}}
-        />
-      </form>
+      <section className="mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2">
+        <form className="relative w-full flex justify-center items-center">
+          <input
+            type="text"
+            placeholder="Search for a tag or a username"
+            value={searchText}
+            onChange={handleSearchChange}
+            required
+            className="search_input peershadow-lg p-6 mb-10 bg-slate-700 rounded-md hover:border-none"
+            style={{
+              boxShadow: "3px 4px #ff0000b5, -3px -4px #ff0000b5",
+              color: "black",
+            }}
+          />
+        </form>
 
-      {/* All Prompts */}
-      {searchText ? (
-        <PromptCardList
-          data={searchedResults}
-          handleTagClick={handleTagClick}
-        />
-      ) : (
-        <PromptCardList data={post} handleTagClick={handleTagClick} />
-      )} 
-    </section>
-  );
+        {/* All Prompts */}
+        {searchText ? (
+          <PromptCardList
+            data={searchedResults}
+            handleTagClick={handleTagClick}
+          />
+        ) : (
+          <PromptCardList data={post} handleTagClick={handleTagClick} />
+        )}
+      </section>
+    );
 };
 
 export default Feed;

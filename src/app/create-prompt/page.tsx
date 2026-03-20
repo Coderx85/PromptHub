@@ -7,11 +7,17 @@ import Loading from "@/app/profile/loading";
 import { useCreatePrompt } from "@/actions";
 
 import Form from "@components/Form";
+import { Session, User } from "better-auth/types";
+
+type AuthSession = {
+  session: Session | null;
+  user: User | null;
+};
 
 const CreatePrompt = () => {
   const router = useRouter();
-  const [session, setSession] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [session, setSession] = useState<AuthSession | null>(null);
+  const [sessionLoading, setSessionLoading] = useState(true);
 
   const [submitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: "", tag: "" });
@@ -25,7 +31,7 @@ const CreatePrompt = () => {
       } catch (error) {
         console.error("Failed to get session:", error);
       } finally {
-        setIsLoading(false);
+        setSessionLoading(false);
       }
     };
     getSession();
@@ -37,13 +43,15 @@ const CreatePrompt = () => {
     setError(null);
 
     try {
-      if (!session?.user._id) {
-        throw new Error("User session not found");
+      if (!session?.user.id) {
+        setError("Please sign in to create a prompt.");
+        router.push("/auth/signin");
+        return;
       }
 
       const response = await useCreatePrompt({
         prompt: post.prompt,
-        userId: session.user._id,
+        userId: session.user.id,
         tag: post.tag,
       });
 
@@ -62,29 +70,19 @@ const CreatePrompt = () => {
     }
   };
 
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  
-    return () => clearTimeout(delay);
-  }, []);
-  
-
   return (
     <>
-      {loading ? (
-        <Loading />  
+      {sessionLoading ? (
+        <Loading />
       ) : (
         <Form
-          type='Create'
+          type="Create"
           post={post}
           setPost={setPost}
           submitting={submitting}
           handleSubmit={createPrompt}
           error={error}
+          isAuthenticated={Boolean(session?.user.id)}
         />
       )}
     </>

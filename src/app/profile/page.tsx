@@ -3,6 +3,7 @@
 import { authClient } from "@auth/auth-client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDeletePrompt } from "@/actions";
 
 import Profile from "@components/Profile";
 
@@ -27,6 +28,10 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user._id}/posts`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch posts: ${response.status}`);
+      }
+
       const data = await response.json();
 
       setMyPosts(data);
@@ -46,9 +51,18 @@ const MyProfile = () => {
 
     if (hasConfirmed) {
       try {
-        await fetch(`/api/prompt/${post._id.toString()}`, {
-          method: "DELETE",
+        if (!session?.user._id) {
+          throw new Error("User session not found");
+        }
+
+        const response = await useDeletePrompt({
+          promptId: post._id.toString(),
+          userId: session.user._id,
         });
+
+        if (response.status !== "success") {
+          throw new Error(response.error?.message || "Failed to delete prompt");
+        }
 
         const filteredPosts = myPosts.filter((item) => item._id !== post._id);
 

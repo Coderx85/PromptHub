@@ -1,17 +1,249 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Noto+Serif+TC:wght@500&display=swap');
+@import "tailwindcss";
 
-body{
+@theme {
+  --font-satoshi: "Josefin Sans", sans-serif;
+  --font-inter: "Noto Serif TC", serif;
+  --color-primary-orange: #ff5722;
+  --color-gold-500: #ffd700;
+}
+
+body {
   font-family: 'Josefin Sans', sans-serif;
   font-family: 'Noto Serif TC', serif;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  color: #fff;
+  min-height: 100vh;
 }
-/* *{
-color: white;
-background: black;
-} */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+html, body, #__next {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  min-height: 100vh;
+}
+
+/* Background Colors */
+.bg-black {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%) !important;
+}
+
+.dark-bg {
+  background: linear-gradient(135deg, #111111 0%, #2d2d2d 50%, #111111 100%);
+  color: #fff;
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(to right, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+}
+
+.bg-gray-gradient {
+  background: linear-gradient(180deg, #2d2d2d 0%, #3d3d3d 50%, #2d2d2d 100%);
+}
+
+/* Typography and Text Styles */
+.head_text {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.red_gradient {
+  background: linear-gradient(90deg, #ff4757, #ff1744);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.desc {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #9ca3af;
+  margin-top: 1rem;
+}
+
+/* Dark mode text adjustments */
+.dark .desc,
+body.dark .desc {
+  color: #d1d5db;
+}
+
+/* Form Styles */
+.form_textarea {
+  width: 100%;
+  padding: 0.875rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.form_textarea:focus {
+  outline: none;
+  border-color: #ff4757;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
+}
+
+.form_textarea::placeholder {
+  color: #d1d5db;
+}
+
+/* Dark mode form textarea */
+.dark .form_textarea,
+body.dark .form_textarea {
+  background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+  border-color: #4a4a4a;
+  color: #e5e7eb;
+}
+
+.dark .form_textarea:focus,
+body.dark .form_textarea:focus {
+  background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+  border-color: #ff4757;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.2);
+}
+
+.dark .form_textarea::placeholder,
+body.dark .form_textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form_input {
+  width: 100%;
+  padding: 0.875rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.form_input:focus {
+  outline: none;
+  border-color: #ff4757;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
+}
+
+.form_input::placeholder {
+  color: #d1d5db;
+}
+
+/* Dark mode form input */
+.dark .form_input,
+body.dark .form_input {
+  background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+  border-color: #4a4a4a;
+  color: #e5e7eb;
+}
+
+.dark .form_input:focus,
+body.dark .form_input:focus {
+  background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+  border-color: #ff4757;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.2);
+}
+
+.dark .form_input::placeholder,
+body.dark .form_input::placeholder {
+  color: #9ca3af;
+}
+
+.glassmorphism {
+  background: linear-gradient(135deg, rgba(42, 42, 42, 0.8) 0%, rgba(58, 58, 58, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+/* Search Bar Styles */
+.search_input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  font-size: 0.95rem;
+  color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.search_input:focus {
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15);
+}
+
+.search_input::placeholder {
+  color: #9ca3af;
+}
+
+/* Dark mode search input */
+.dark .search_input,
+body.dark .search_input {
+  background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+  color: #e5e7eb;
+  border: 1px solid #4a4a4a;
+  box-shadow: 3px 4px rgba(255, 0, 0, 0.35), -3px -4px rgba(255, 0, 0, 0.35);
+}
+
+.dark .search_input:focus,
+body.dark .search_input:focus {
+  background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.2);
+}
+
+.dark .search_input::placeholder,
+body.dark .search_input::placeholder {
+  color: #9ca3af;
+}
+
+/* Layout Styles */
+.prompt_layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 640px) {
+  .prompt_layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Flex Utilities */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .main {
   width: 100vw;
@@ -76,87 +308,27 @@ background: black;
 }
 
 
-/* Tailwind Styles */
+/* Tailwind Styles - MIGRATED TO TAILWIND V4
+   All @apply rules have been commented out and should be applied as inline className attributes in React components.
+   See component files for implementation.
 
-.app {
-  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
-}
+   DEPRECATED - Use inline className instead:
+   className="relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6"
+*/
 
-.black_btn {
-  @apply rounded-full border dark:bg-gray-700 border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
-}
-
-.outline_btn {
-  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-white dark:border-white transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
-}
-
-.head_text {
-  @apply mt-5 text-5xl font-extrabold leading-[1.15] dark:text-slate-300 text-black sm:text-6xl;
-}
-
-.red_gradient {
-  @apply bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent;  
-}
-
-.orange_gradient {
-  @apply bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent;
-}
-
-.green_gradient {
-  @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
-}
-
-.blue_gradient {
-  @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
-}
-
-.desc {
-  @apply mt-5 text-lg text-gray-300 sm:text-xl max-w-2xl;
-}
-
-.search_input {
-  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
-}
-
-.copy_btn {
-  @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
-}
-
-.glassmorphism {
-  @apply rounded-xl border border-gray-200 bg-black p-5;
-}
-
-.prompt_layout {
-  @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
-}
-
-/* Feed Component */
-.feed {
-  @apply mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2;
-}
-
-/* Form Component */
-.form_textarea {
-  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-300 outline-0;
-}
-
-.form_input {
-  @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
-}
-
-/* Nav Component */
-.logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg tracking-wide bg-gradient-to-r to-red-900 bg-clip-text ;
-}
-
-.dropdown {
+/* .dropdown {
   @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
 }
+USE INSTEAD: className="absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end"
+*/
 
-.dropdown_link {
-  @apply text-sm font-inter  hover:text-gray-500 font-medium;
+/* .dropdown_link {
+  @apply text-sm font-inter hover:text-gray-500 font-medium;
   font-size: 1.875rem;
 }
+USE INSTEAD: className="text-sm font-inter hover:text-gray-500 font-medium"
+AND add inline style={{ fontSize: '1.875rem' }} or use Tailwind's text size utilities
+*/
 
 .wrapper ul {
   display: flex;
@@ -209,26 +381,27 @@ background: black;
 }
 
 
-/* PromptCard Component */
+/* PromptCard Component - MIGRATED TO TAILWIND V4
 .prompt_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 shadow-sm bg-white dark:bg-slate-900 shadow-white bg-clip-padding p-6 pb-4 backdrop-blur-xl backdrop-filter md:w-[360px] w-full h-fit;
+  USE INSTEAD: className="flex-1 break-inside-avoid rounded-lg border border-gray-300 shadow-sm bg-white dark:bg-slate-900 shadow-white bg-clip-padding p-6 pb-4 backdrop-blur-xl backdrop-filter md:w-[360px] w-full h-fit"
 }
 
 .flex-center {
-  @apply flex justify-center items-center;
+  USE INSTEAD: className="flex justify-center items-center"
 }
 
 .flex-start {
-  @apply flex justify-start items-start;
+  USE INSTEAD: className="flex justify-start items-start"
 }
 
 .flex-end {
-  @apply flex justify-end items-center;
+  USE INSTEAD: className="flex justify-end items-center"
 }
 
 .flex-between {
-  @apply flex justify-between items-center;
+  USE INSTEAD: className="flex justify-between items-center"
 }
+*/
 
 .pl {
   width: 350px;

@@ -43,22 +43,22 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
   };
   
   return (
-  <div className='prompt_card hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 p-4 rounded-lg shadow-md'>
-      <div className='flex justify-between items-start gap-5'>
+    <div className="flex-1 break-inside-avoid rounded-lg border border-gray-300 shadow-sm bg-white dark:bg-slate-900 shadow-white bg-clip-padding p-6 pb-4 backdrop-blur-xl backdrop-filter md:w-[360px] w-full h-fit hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300">
+      <div className="flex justify-between items-start gap-5">
         <div
-          className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
+          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
           onClick={handleProfileClick}
         >
           <Image
             src={post.creator.image}
-            alt='user_image'
+            alt="user_image"
             width={40}
             height={40}
-            className='rounded-full object-contain'
+            className="rounded-full object-contain"
           />
 
-          <div className='flex flex-col'>
-            <h3 className='font-satoshi dark:text-white font-semibold text-gray-900'>
+          <div className="flex flex-col">
+            <h3 className="font-satoshi dark:text-white font-semibold text-gray-900">
               {capitalizeFirstLetter(post.creator.username)}
             </h3>
             {/* <p className='font-inter text-sm text-gray-500'>
@@ -66,7 +66,10 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
             </p> */}
           </div>
         </div>
-        <div className='copy_btn' onClick={handleCopy}>
+        <div
+          className="w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer"
+          onClick={handleCopy}
+        >
           <Image
             src={
               copied === post.prompt
@@ -80,24 +83,26 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         </div>
       </div>
 
-      <p className='my-4 font-satoshi text-sm text-gray-700 dark:text-slate-300'>{post.prompt}</p>
+      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-slate-300">
+        {post.prompt}
+      </p>
       <p
-        className='font-inter text-sm blue_gradient cursor-pointer'
+        className="font-inter text-sm bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         #{post.tag}
       </p>
 
       {session?.user._id === post.creator._id && pathName === "/profile" && (
-        <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+        <div className="mt-5 flex justify-center items-center gap-4 border-t border-gray-100 pt-3">
           <p
-            className='font-inter text-sm green_gradient cursor-pointer'
+            className="font-inter text-sm bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent cursor-pointer"
             onClick={handleEdit}
           >
             Edit
           </p>
           <p
-            className='font-inter text-sm orange_gradient cursor-pointer'
+            className="font-inter text-sm bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent cursor-pointer"
             onClick={handleDelete}
           >
             Delete
@@ -121,7 +126,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
       ):(
         <div></div>
       )} */}
-      </div>
+    </div>
   );
 };
 

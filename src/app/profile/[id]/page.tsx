@@ -14,6 +14,10 @@ const UserProfile = ({ params }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${params?.id}/posts`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch posts: ${response.status}`);
+      }
+
       const data = await response.json();
 
       setUserPosts(data);
