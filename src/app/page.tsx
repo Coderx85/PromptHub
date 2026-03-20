@@ -22,21 +22,25 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
-        <section className='w-full flex-center flex-col'>
-          <h1 className='head_text text-center'>
+        <section className="w-full flex justify-center bg-black items-center flex-col px-3 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg">
+          <h1 className="mt-5 text-5xl font-extrabold leading-[1.15] dark:text-slate-300 text-black sm:text-6xl text-center">
             Discover & Share
-            <br className='max-md:hidden' />
-            <span className='red_gradient text-center'>AI-Powered Prompts</span>
+            <br className="max-md:hidden" />
+            <span className="bg-gradient-to-r from-red-500 to-red-800 bg-clip-text text-transparent text-center">
+              AI-Powered Prompts
+            </span>
           </h1>
-          <p className='desc text-center'>
-            PromptHub is a platform that enables users to seamlessly share and explore prompts for writing and ideation. 
-            With a clean, intuitive interface, it offers an enriching experience in a streamlined, user-friendly environment
+          <p className="mt-5 text-lg text-gray-300 sm:text-xl max-w-2xl text-center">
+            PromptHub is a platform that enables users to seamlessly share and
+            explore prompts for writing and ideation. With a clean, intuitive
+            interface, it offers an enriching experience in a streamlined,
+            user-friendly environment
           </p>
           <Feed />
         </section>
       )}
     </>
-  )
+  );
 };

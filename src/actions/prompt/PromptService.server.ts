@@ -1,5 +1,6 @@
 'use server';
 
+import { Types } from "mongoose";
 import { connectToDB } from '@/utils/database';
 import Prompt from '@/models/prompt.modal';
 import User from '@/models/user.modal';
@@ -37,11 +38,22 @@ import {
  * Handles all business logic for prompt operations
  */
 class PromptServiceImpl implements IPromptService {
+  private toObjectId(userId: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(userId)) {
+      throw new PromptError(
+        PromptErrorCode.INVALID_USER_ID,
+        PROMPT_ERROR_MESSAGES.INVALID_USER_ID,
+      );
+    }
+
+    return new Types.ObjectId(userId);
+  }
+
   /**
    * Create a new prompt
    */
   async createPrompt(
-    request: createPromptInput
+    request: createPromptInput,
   ): Promise<CreatePromptResponse> {
     try {
       // Validate input
@@ -51,15 +63,17 @@ class PromptServiceImpl implements IPromptService {
         userId: request.userId,
       });
 
+      const userObjectId = this.toObjectId(validated.userId);
+
       // Connect to database
       await connectToDB();
 
       // Verify user exists
-      const user = await User.findOne({ _id: validated.userId } as any);
+      const user = await User.findOne({ _id: userObjectId } as any);
       if (!user) {
         throw new PromptError(
           PromptErrorCode.INVALID_USER_ID,
-          PROMPT_ERROR_MESSAGES.INVALID_USER_ID
+          PROMPT_ERROR_MESSAGES.INVALID_USER_ID,
         );
       }
 
@@ -74,16 +88,16 @@ class PromptServiceImpl implements IPromptService {
 
       return new CreatePromptResponse(
         savedPrompt._id.toString(),
-        PROMPT_SUCCESS_MESSAGES.PROMPT_CREATED
+        PROMPT_SUCCESS_MESSAGES.PROMPT_CREATED,
       );
     } catch (error) {
       if (error instanceof ValidationError || error instanceof PromptError) {
         throw error;
       }
-      console.error('Create prompt error:', error);
+      console.error("Create prompt error:", error);
       throw new PromptError(
         PromptErrorCode.DATABASE_ERROR,
-        PROMPT_ERROR_MESSAGES.DATABASE_ERROR
+        PROMPT_ERROR_MESSAGES.DATABASE_ERROR,
       );
     }
   }
@@ -91,9 +105,7 @@ class PromptServiceImpl implements IPromptService {
   /**
    * Update an existing prompt
    */
-  async updatePrompt(
-    request: UpdatePromptRequest
-  ): Promise<PromptResponse> {
+  async updatePrompt(request: UpdatePromptRequest): Promise<PromptResponse> {
     try {
       // Validate input
       const validated = updatePromptSchema.parse({
@@ -107,13 +119,13 @@ class PromptServiceImpl implements IPromptService {
       await connectToDB();
 
       // Find prompt
-      const prompt = await Prompt.findOne({ _id: validated.promptId } as any).populate(
-        'creator'
-      );
+      const prompt = await Prompt.findOne({
+        _id: validated.promptId,
+      } as any).populate("creator");
       if (!prompt) {
         throw new PromptError(
           PromptErrorCode.PROMPT_NOT_FOUND,
-          PROMPT_ERROR_MESSAGES.PROMPT_NOT_FOUND
+          PROMPT_ERROR_MESSAGES.PROMPT_NOT_FOUND,
         );
       }
 
@@ -121,7 +133,7 @@ class PromptServiceImpl implements IPromptService {
       if (prompt.creator._id.toString() !== validated.userId) {
         throw new PromptError(
           PromptErrorCode.UNAUTHORIZED,
-          PROMPT_ERROR_MESSAGES.UNAUTHORIZED
+          PROMPT_ERROR_MESSAGES.UNAUTHORIZED,
         );
       }
 
@@ -131,17 +143,17 @@ class PromptServiceImpl implements IPromptService {
       const updatedPrompt = await prompt.save();
 
       // Populate creator details
-      await updatedPrompt.populate('creator');
+      await updatedPrompt.populate("creator");
 
       return this.mapToPromptResponse(updatedPrompt);
     } catch (error) {
       if (error instanceof ValidationError || error instanceof PromptError) {
         throw error;
       }
-      console.error('Update prompt error:', error);
+      console.error("Update prompt error:", error);
       throw new PromptError(
         PromptErrorCode.DATABASE_ERROR,
-        PROMPT_ERROR_MESSAGES.DATABASE_ERROR
+        PROMPT_ERROR_MESSAGES.DATABASE_ERROR,
       );
     }
   }
@@ -161,13 +173,13 @@ class PromptServiceImpl implements IPromptService {
       await connectToDB();
 
       // Find prompt
-      const prompt = await Prompt.findOne({ _id: validated.promptId } as any).populate(
-        'creator'
-      );
+      const prompt = await Prompt.findOne({
+        _id: validated.promptId,
+      } as any).populate("creator");
       if (!prompt) {
         throw new PromptError(
           PromptErrorCode.PROMPT_NOT_FOUND,
-          PROMPT_ERROR_MESSAGES.PROMPT_NOT_FOUND
+          PROMPT_ERROR_MESSAGES.PROMPT_NOT_FOUND,
         );
       }
 
@@ -175,7 +187,7 @@ class PromptServiceImpl implements IPromptService {
       if (prompt.creator._id.toString() !== validated.userId) {
         throw new PromptError(
           PromptErrorCode.UNAUTHORIZED,
-          PROMPT_ERROR_MESSAGES.UNAUTHORIZED
+          PROMPT_ERROR_MESSAGES.UNAUTHORIZED,
         );
       }
 
@@ -185,10 +197,10 @@ class PromptServiceImpl implements IPromptService {
       if (error instanceof ValidationError || error instanceof PromptError) {
         throw error;
       }
-      console.error('Delete prompt error:', error);
+      console.error("Delete prompt error:", error);
       throw new PromptError(
         PromptErrorCode.DATABASE_ERROR,
-        PROMPT_ERROR_MESSAGES.DATABASE_ERROR
+        PROMPT_ERROR_MESSAGES.DATABASE_ERROR,
       );
     }
   }
@@ -196,9 +208,7 @@ class PromptServiceImpl implements IPromptService {
   /**
    * Get a single prompt by ID
    */
-  async getPromptById(
-    request: FetchPromptRequest
-  ): Promise<PromptResponse> {
+  async getPromptById(request: FetchPromptRequest): Promise<PromptResponse> {
     try {
       // Validate input
       const validated = fetchPromptSchema.parse({
@@ -209,13 +219,13 @@ class PromptServiceImpl implements IPromptService {
       await connectToDB();
 
       // Find prompt
-      const prompt = await Prompt.findOne({ _id: validated.promptId } as any).populate(
-        'creator'
-      );
+      const prompt = await Prompt.findOne({
+        _id: validated.promptId,
+      } as any).populate("creator");
       if (!prompt) {
         throw new PromptError(
           PromptErrorCode.PROMPT_NOT_FOUND,
-          PROMPT_ERROR_MESSAGES.PROMPT_NOT_FOUND
+          PROMPT_ERROR_MESSAGES.PROMPT_NOT_FOUND,
         );
       }
 
@@ -224,10 +234,10 @@ class PromptServiceImpl implements IPromptService {
       if (error instanceof ValidationError || error instanceof PromptError) {
         throw error;
       }
-      console.error('Fetch prompt by ID error:', error);
+      console.error("Fetch prompt by ID error:", error);
       throw new PromptError(
         PromptErrorCode.DATABASE_ERROR,
-        PROMPT_ERROR_MESSAGES.DATABASE_ERROR
+        PROMPT_ERROR_MESSAGES.DATABASE_ERROR,
       );
     }
   }
@@ -236,7 +246,7 @@ class PromptServiceImpl implements IPromptService {
    * Get all prompts with pagination
    */
   async getAllPrompts(
-    request: FetchAllPromptsRequest
+    request: FetchAllPromptsRequest,
   ): Promise<PromptResponse[]> {
     try {
       // Validate input
@@ -253,7 +263,7 @@ class PromptServiceImpl implements IPromptService {
 
       // Fetch prompts
       const prompts = await Prompt.find()
-        .populate('creator')
+        .populate("creator")
         .skip(skip)
         .limit(validated.limit)
         .sort({ createdAt: -1 })
@@ -264,10 +274,10 @@ class PromptServiceImpl implements IPromptService {
       if (error instanceof ValidationError || error instanceof PromptError) {
         throw error;
       }
-      console.error('Fetch all prompts error:', error);
+      console.error("Fetch all prompts error:", error);
       throw new PromptError(
         PromptErrorCode.DATABASE_ERROR,
-        PROMPT_ERROR_MESSAGES.DATABASE_ERROR
+        PROMPT_ERROR_MESSAGES.DATABASE_ERROR,
       );
     }
   }
@@ -276,7 +286,7 @@ class PromptServiceImpl implements IPromptService {
    * Get all prompts by a specific user
    */
   async getUserPrompts(
-    request: FetchUserPromptsRequest
+    request: FetchUserPromptsRequest,
   ): Promise<PromptResponse[]> {
     try {
       // Validate input
@@ -290,11 +300,13 @@ class PromptServiceImpl implements IPromptService {
       await connectToDB();
 
       // Verify user exists
-      const user = await User.findOne({ _id: validated.userId } as any);
+      const user = await User.findOne({
+        _id: this.toObjectId(validated.userId),
+      } as any);
       if (!user) {
         throw new PromptError(
           PromptErrorCode.INVALID_USER_ID,
-          PROMPT_ERROR_MESSAGES.INVALID_USER_ID
+          PROMPT_ERROR_MESSAGES.INVALID_USER_ID,
         );
       }
 
@@ -303,7 +315,7 @@ class PromptServiceImpl implements IPromptService {
 
       // Fetch prompts
       const prompts = await Prompt.find({ creator: validated.userId } as any)
-        .populate('creator')
+        .populate("creator")
         .skip(skip)
         .limit(validated.limit)
         .sort({ createdAt: -1 })
@@ -314,10 +326,10 @@ class PromptServiceImpl implements IPromptService {
       if (error instanceof ValidationError || error instanceof PromptError) {
         throw error;
       }
-      console.error('Fetch user prompts error:', error);
+      console.error("Fetch user prompts error:", error);
       throw new PromptError(
         PromptErrorCode.DATABASE_ERROR,
-        PROMPT_ERROR_MESSAGES.DATABASE_ERROR
+        PROMPT_ERROR_MESSAGES.DATABASE_ERROR,
       );
     }
   }
@@ -331,15 +343,15 @@ class PromptServiceImpl implements IPromptService {
       prompt._id.toString(),
       new CreatorDTO(
         creator._id.toString(),
-        creator.username || 'Unknown',
+        creator.username || "Unknown",
         creator.email,
-        creator.image
+        creator.image,
       ),
       prompt.prompt,
       prompt.tag,
       prompt.likes || 0,
       prompt.createdAt,
-      prompt.updatedAt
+      prompt.updatedAt,
     );
   }
 }
